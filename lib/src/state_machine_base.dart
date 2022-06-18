@@ -34,7 +34,7 @@ abstract class StateMachine<E extends Object, S, M> {
   Stream<S> get stateStream => _stateStreamController.stream;
   Stream<M> get messages => _messageStreamController.stream;
 
-  FutureOr<void> Function(E event)? eventHandler(E event);
+  FutureOr<void> Function(ET event)? eventHandler<ET extends E>(E event);
 
   void addEvent(E event) {
     final handler = eventHandler(event);
