@@ -7,8 +7,6 @@ import 'package:state_machine/src/state_reference.dart';
 
 import 'exceptions/state_machine_exception.dart';
 
-typedef EventHandler<E> = Function(E event);
-
 /// Checks if you are awesome. Spoiler: you are.
 abstract class StateMachine<E extends Object, S, M> {
   StateMachine(this._state, this._reference, {this.initialEvent}) {
