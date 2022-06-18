@@ -1,0 +1,3 @@
+class Repo {
+  void getSome() {}
+}

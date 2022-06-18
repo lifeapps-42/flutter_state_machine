@@ -32,11 +32,12 @@ abstract class StateMachine<E extends Object, S, M> {
     _stateStreamController.add(newState);
   }
 
+  StateReference get reference => _reference;
   S get state => _state;
   Stream<S> get stateStream => _stateStreamController.stream;
   Stream<M> get messages => _messageStreamController.stream;
 
-  void handle<ET extends E>(Function(ET) handler) {
+  void handle<ET extends E>(Function(ET event) handler) {
     _handlersMap[ET] = handler;
   }
 

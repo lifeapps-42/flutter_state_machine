@@ -15,6 +15,10 @@ class StateReference {
     return machine;
   }
 
+  T getResource<T>() {
+    return _context.read<T>();
+  }
+
   final _watches = <StateWatch>{};
 
   void _registerWatch(StateWatch watch) {
