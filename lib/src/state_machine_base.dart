@@ -46,7 +46,7 @@ abstract class StateMachine<S> {
   void onShift(S oldState, S newState) {}
 
   void start() {
-    _stateStreamController = StreamController<S>.broadcast();
+    _stateStreamController = StreamController<S>();
     _state = _initialState;
   }
 
