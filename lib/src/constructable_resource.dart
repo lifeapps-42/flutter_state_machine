@@ -15,13 +15,13 @@ abstract class ConstructableResource<T> {
 
   @nonVirtual
   void _registerInBus() {
-    final bus = MachineBus.instance;
+    final bus = MachineBus();
     bus.registerResource(this);
   }
 
   @nonVirtual
   T get resourceInstance {
-    _resource ??= _factory(MachineBus.instance);
+    _resource ??= _factory(MachineBus());
     return _resource!;
   }
 
@@ -29,7 +29,7 @@ abstract class ConstructableResource<T> {
   void _initFactory() {
     _registerInBus();
     if (!isLazy) {
-      _resource = _factory(MachineBus.instance);
+      _resource = _factory(MachineBus());
     }
   }
 

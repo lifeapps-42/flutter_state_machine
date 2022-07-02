@@ -5,7 +5,11 @@ import 'package:state_machine/src/constructable_resource.dart';
 class MachineBus {
   MachineBus._();
   static MachineBus? _instance;
-  static MachineBus get instance => _instance ?? MachineBus._();
+
+  factory MachineBus() {
+    _instance ??= MachineBus._();
+    return _instance!;
+  }
 
   final _busResources = <ConstructableResource>{};
 
