@@ -106,6 +106,7 @@ class MachineFactory<S extends Object>
     _machineStateStreamSubscription = resourceInstance.stateStream.listen(
       _factoryStateStreamController.add,
     );
+    print('${resourceInstance.stateStream} subscription started');
   }
 
   void _onCancel() {
