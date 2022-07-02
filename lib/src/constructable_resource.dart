@@ -112,9 +112,8 @@ class MachineFactory<S extends Object>
     _machineStateStreamSubscription?.cancel();
     if (autoStop) {
       resourceInstance.stop();
-      _resource = null;
+      _dispose();
     }
-    _dispose();
   }
 
   @override
