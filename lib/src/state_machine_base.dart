@@ -48,7 +48,7 @@ abstract class StateMachine<S> {
   }
 
   void start() {
-    _stateStreamController = StreamController<S>(
+    _stateStreamController = StreamController<S>.broadcast(
       onListen: () {
         print('$runtimeType($hashCode) LISTENER ADDED');
         print(_stateStreamController.hasListener);
