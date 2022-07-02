@@ -46,6 +46,7 @@ abstract class ConstructableResource<T> {
     if (!isLazy) {
       _createResourceIfNull();
     }
+    print('_initFactory: $runtimeType, $hashCode');
   }
 
   @mustCallSuper
