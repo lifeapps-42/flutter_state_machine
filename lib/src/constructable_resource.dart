@@ -3,6 +3,16 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../state_machine.dart';
+import 'machine_bus.dart';
+
+class MachineBus {
+  const MachineBus._fromBus(this._bus);
+
+  final Bus _bus;
+
+  R getResource<R>(covariant ConstructableResource<R> resourceFactory) =>
+      _bus.getResource(resourceFactory);
+}
 
 abstract class ConstructableResource<T> {
   ConstructableResource() {
@@ -15,21 +25,26 @@ abstract class ConstructableResource<T> {
 
   @nonVirtual
   void _registerInBus() {
-    final bus = MachineBus();
+    final bus = Bus();
     bus.registerResource(this);
   }
 
   @nonVirtual
   T get resourceInstance {
-    _resource ??= _factory(MachineBus());
+    _createResourceIfNull();
     return _resource!;
+  }
+
+  void _createResourceIfNull() {
+    late final machineBus = MachineBus._fromBus(Bus());
+    _resource ??= _factory(machineBus);
   }
 
   @mustCallSuper
   void _initFactory() {
     _registerInBus();
     if (!isLazy) {
-      _resource = _factory(MachineBus());
+      _createResourceIfNull();
     }
   }
 

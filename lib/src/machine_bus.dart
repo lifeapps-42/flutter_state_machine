@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:state_machine/src/constructable_resource.dart';
 
-class MachineBus {
-  MachineBus._();
-  static MachineBus? _instance;
+class Bus {
+  Bus._();
+  static Bus? _instance;
 
-  factory MachineBus() {
-    _instance ??= MachineBus._();
+  factory Bus() {
+    _instance ??= Bus._();
     return _instance!;
   }
 
