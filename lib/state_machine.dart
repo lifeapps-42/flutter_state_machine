@@ -4,7 +4,6 @@
 library state_machine;
 
 export 'src/state_machine_base.dart';
-export 'src/state_watch.dart';
-export 'src/state_reference.dart';
+
 
 // TODO: Export any libraries intended for clients of this package.
