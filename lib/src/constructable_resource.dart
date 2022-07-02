@@ -89,11 +89,11 @@ class MachineFactory<S extends Object>
   final bool autoStart;
   final bool autoStop;
 
-  late final SynchronousStreamController<S> _machineStateStreamController;
+  late final StreamController<S> _factoryStateStreamController;
 
   StreamSubscription<S>? _machineStateStreamSubscription;
 
-  Stream<S> get stateStream => _machineStateStreamController.stream;
+  Stream<S> get stateStream => _factoryStateStreamController.stream;
   S get state => resourceInstance.state;
 
   @override
@@ -104,12 +104,13 @@ class MachineFactory<S extends Object>
 
   void _onListen() {
     _machineStateStreamSubscription = resourceInstance.stateStream.listen(
-      _machineStateStreamController.add,
+      _factoryStateStreamController.add,
     );
   }
 
   void _onCancel() {
     _machineStateStreamSubscription?.cancel();
+    print('${resourceInstance.stateStream} subscription cancelled');
     if (autoStop) {
       resourceInstance.stop();
       _dispose();
@@ -119,10 +120,9 @@ class MachineFactory<S extends Object>
   @override
   void _initFactory() {
     super._initFactory();
-    _machineStateStreamController = StreamController<S>.broadcast(
-      sync: true,
+    _factoryStateStreamController = StreamController<S>.broadcast(
       onListen: _onListen,
       onCancel: _onCancel,
-    ) as SynchronousStreamController<S>;
+    );
   }
 }
