@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:state_machine/src/constructable_resource.dart';
 
 class MachineBus {
@@ -16,6 +18,7 @@ class MachineBus {
   }
 
   void registerResource(ConstructableResource resource) {
+    print('registerResource: ${resource.runtimeType}');
     _busResources.add(resource);
   }
 }
