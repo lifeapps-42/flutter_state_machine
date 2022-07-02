@@ -20,7 +20,7 @@ abstract class ConstructableResource<T> {
   }
 
   @nonVirtual
-  T get _resourceInstance {
+  T get resourceInstance {
     _resource ??= _factory(MachineBus.instance);
     return _resource!;
   }
@@ -39,7 +39,7 @@ abstract class ConstructableResource<T> {
   }
 }
 
-class ResourceFactory<T> extends ConstructableResource {
+class ResourceFactory<T> extends ConstructableResource<T> {
   ResourceFactory(
     this._resourceFactory, {
     this.lazy = true,
@@ -67,9 +67,7 @@ class MachineFactory<S extends Object>
     this._machineFactory, {
     this.autoStart = true,
     this.autoStop = false,
-  }) {
-    _initFactory();
-  }
+  });
 
   final StateMachine<S> Function(MachineBus bus) _machineFactory;
   final bool autoStart;
@@ -80,7 +78,7 @@ class MachineFactory<S extends Object>
   StreamSubscription<S>? _machineStateStreamSubscription;
 
   Stream<S> get stateStream => _machineStateStreamController.stream;
-  S get state => _resourceInstance.state;
+  S get state => resourceInstance.state;
 
   @override
   StateMachine<S> Function(MachineBus bus) get _factory => _machineFactory;
@@ -89,7 +87,7 @@ class MachineFactory<S extends Object>
   bool get isLazy => autoStart;
 
   void _onListen() {
-    _machineStateStreamSubscription = _resourceInstance.stateStream.listen(
+    _machineStateStreamSubscription = resourceInstance.stateStream.listen(
       _machineStateStreamController.add,
     );
   }
@@ -97,7 +95,7 @@ class MachineFactory<S extends Object>
   void _onCancel() {
     _machineStateStreamSubscription?.cancel();
     if (autoStop) {
-      _resourceInstance.stop();
+      resourceInstance.stop();
       _resource = null;
     }
     _dispose();

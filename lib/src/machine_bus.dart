@@ -5,14 +5,14 @@ class MachineBus {
   static MachineBus? _instance;
   static MachineBus get instance => _instance ?? MachineBus._();
 
-  final _busResources = <Object>{};
+  final _busResources = <ConstructableResource>{};
 
-  T getResource<T extends ConstructableResource>(T resource) {
-    final resourceInstance = _busResources.firstWhere(
-      (element) => element == resource,
+  R getResource<R>(covariant ConstructableResource<R> resourceFactory) {
+    final factory = _busResources.firstWhere(
+      (element) => element == resourceFactory,
     );
 
-    return resourceInstance as T;
+    return factory.resourceInstance;
   }
 
   void registerResource(ConstructableResource resource) {
