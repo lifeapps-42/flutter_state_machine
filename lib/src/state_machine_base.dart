@@ -43,17 +43,21 @@ abstract class StateMachine<S> {
   //     throw EventHandlerNotRegistered(event);
   //   }
   // }
-  void onShift(S oldState, S newState) {}
+  void onShift(S oldState, S newState) {
+    print('$runtimeType shifted from $oldState to $newState');
+  }
 
   void start() {
     _stateStreamController = StreamController<S>();
     _state = _initialState;
+    print('$runtimeType is STARTED with state: $_state');
   }
 
   @mustCallSuper
   void stop() {
     // _reference.cancel();
     _stateStreamController.close();
+    print('$runtimeType is stopped');
     // _messageStreamController.close();
   }
 }
