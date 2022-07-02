@@ -3,14 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../state_machine.dart';
-import '../constructable_resource.dart';
 
 enum BuildFilter {
   equal,
   type,
 }
 
-class MachineBuilder<S> extends StatefulWidget {
+class MachineBuilder<S extends Object> extends StatefulWidget {
   const MachineBuilder({
     Key? key,
     required this.machineFactory,
@@ -18,7 +17,7 @@ class MachineBuilder<S> extends StatefulWidget {
     this.buildFilter = BuildFilter.equal,
   }) : super(key: key);
 
-  final MachineFactory<StateMachine<S>, S> machineFactory;
+  final MachineFactory<S> machineFactory;
   final Widget Function(BuildContext context, S state) builder;
   final BuildFilter buildFilter;
 
@@ -27,9 +26,9 @@ class MachineBuilder<S> extends StatefulWidget {
       _MachineBuilderState<StateMachine<S>, S>();
 }
 
-class _MachineBuilderState<M extends StateMachine<S>, S>
+class _MachineBuilderState<M extends StateMachine<S>, S extends Object>
     extends State<MachineBuilder<S>> {
-  late final MachineFactory<StateMachine<S>, S> _machineFactory;
+  late final MachineFactory<S> _machineFactory;
   late S _state;
   late final StreamSubscription<S> _stateSubscription;
 

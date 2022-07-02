@@ -61,7 +61,7 @@ class ResourceFactory<T> extends ConstructableResource {
   }
 }
 
-class MachineFactory<M extends StateMachine<S>, S>
+class MachineFactory<S extends Object>
     extends ConstructableResource<StateMachine<S>> {
   MachineFactory(
     this._machineFactory, {
