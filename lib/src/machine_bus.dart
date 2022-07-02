@@ -19,7 +19,7 @@ class MachineBus {
 
   void registerResource(ConstructableResource resource) {
     print('registerResource: ${resource.runtimeType}');
-    print(_busResources);
     _busResources.add(resource);
+    print(_busResources);
   }
 }
