@@ -9,9 +9,7 @@ import 'exceptions/state_machine_exception.dart';
 
 /// Checks if you are awesome. Spoiler: you are.
 abstract class StateMachine<S> {
-  StateMachine(
-    this._initialState,
-  ) {
+  StateMachine(this._initialState) {
     start();
   }
   final S _initialState;
