@@ -48,7 +48,10 @@ abstract class StateMachine<S> {
   }
 
   void start() {
-    _stateStreamController = StreamController<S>();
+    _stateStreamController = StreamController<S>(
+      onListen: () => print('$runtimeType($hashCode) LISTENER ADDED'),
+      onCancel: () => print('$runtimeType($hashCode) NO LISTENERS'),
+    );
     _state = _initialState;
     print('$runtimeType($hashCode) is STARTED with state: $_state');
   }
