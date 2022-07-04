@@ -33,7 +33,8 @@ class TypeStateFilter<S extends Object> extends StateFilter<S> {
   }
 }
 
-class PreciseStateFilter<S extends Object, T> extends StateFilter<S> {
+class PreciseStateFilter<S extends Object, T extends Object>
+    extends StateFilter<S> {
   final Target<S, T> target;
   const PreciseStateFilter(this.target);
   @override
