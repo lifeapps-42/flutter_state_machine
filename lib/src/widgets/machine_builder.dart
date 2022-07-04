@@ -7,9 +7,11 @@ import '../../state_machine.dart';
 class Target<S extends Object, T extends Object> {
   final T? Function(S state) target;
 
-  const Target(this.target);
+  Target(this.target);
 
-  T? call(S state) => target(state);
+  T? call(S state) {
+    return target(state);
+  }
 }
 
 abstract class StateFilter<S extends Object> {
@@ -40,6 +42,10 @@ class PreciseStateFilter<S extends Object, T extends Object>
   @override
   bool Function(S oldState, S newState) get shouldIgnore {
     return (oldState, newState) => target(oldState) == target(newState);
+  }
+
+  T? targetState(S state) {
+    return target(state);
   }
 }
 
