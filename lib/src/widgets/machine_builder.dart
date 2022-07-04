@@ -81,7 +81,7 @@ class MachineBuilder<S extends Object> extends StatefulWidget {
     this.child = const SizedBox(),
   }) : super(key: key);
 
-  final MachineFactory<S> machineFactory;
+  final MachineFactory<StateMachine<S>, S> machineFactory;
   final Widget Function(BuildContext context, S state, Widget child) builder;
   final StateFilter<S> stateFilter;
   final Widget child;
@@ -91,7 +91,7 @@ class MachineBuilder<S extends Object> extends StatefulWidget {
 }
 
 class _MachineBuilderState<S extends Object> extends State<MachineBuilder<S>> {
-  late final MachineFactory<S> _machineFactory;
+  late final MachineFactory<StateMachine<S>, S> _machineFactory;
   late S _state;
   late final StreamSubscription<S> _stateSubscription;
 
@@ -141,7 +141,7 @@ class MachineListener<S extends Object> extends StatefulWidget {
     this.child = const SizedBox(),
   }) : super(key: key);
 
-  final MachineFactory<S> machineFactory;
+  final MachineFactory<StateMachine<S>, S> machineFactory;
   final void Function(BuildContext context, S oldState, S newState) onChange;
   final StateFilter<S> stateFilter;
   final Widget child;
@@ -152,7 +152,7 @@ class MachineListener<S extends Object> extends StatefulWidget {
 
 class _MachineListenerState<S extends Object>
     extends State<MachineListener<S>> {
-  late final MachineFactory<S> _machineFactory;
+  late final MachineFactory<StateMachine<S>, S> _machineFactory;
   late S _state;
   late final StreamSubscription<S> _stateSubscription;
 

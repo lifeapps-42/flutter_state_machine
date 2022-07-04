@@ -4,9 +4,6 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 
-import 'event_handler.dart';
-import 'exceptions/state_machine_exception.dart';
-
 /// Checks if you are awesome. Spoiler: you are.
 abstract class StateMachine<S> {
   StateMachine(this._initialState) {
@@ -48,18 +45,8 @@ abstract class StateMachine<S> {
   }
 
   void start() {
-    _stateStreamController = StreamController<S>.broadcast(
-      onListen: () {
-        print('$runtimeType($hashCode) LISTENER ADDED');
-        print(_stateStreamController.hasListener);
-      },
-      onCancel: () {
-        print('$runtimeType($hashCode) NO LISTENERS');
-        print(_stateStreamController.hasListener);
-      },
-    );
+    _stateStreamController = StreamController<S>.broadcast();
     _state = _initialState;
-    print('$runtimeType($hashCode) is STARTED with state: $_state');
   }
 
   @mustCallSuper
