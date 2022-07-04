@@ -8,5 +8,7 @@ export 'src/widgets/machine_builder.dart';
 export 'src/widgets/sub_machine_builder.dart';
 export 'src/constructable_resource.dart';
 
+export 'src/gears/notifier_gear.dart';
+
 
 // TODO: Export any libraries intended for clients of this package.
