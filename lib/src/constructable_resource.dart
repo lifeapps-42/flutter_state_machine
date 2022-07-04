@@ -75,7 +75,7 @@ class ResourceFactory<T> extends ConstructableResource<T> {
   }
 }
 
-class MachineFactory<M extends StateMachine<S>, S extends Object>
+class MachineFactory<S extends Object>
     extends ConstructableResource<StateMachine<S>> {
   MachineFactory(
     this._machineFactory, {
@@ -83,7 +83,7 @@ class MachineFactory<M extends StateMachine<S>, S extends Object>
     this.autoStop = false,
   });
 
-  final M Function(MachineBus bus) _machineFactory;
+  final StateMachine<S> Function(MachineBus bus) _machineFactory;
   final bool autoStart;
   final bool autoStop;
 
@@ -95,7 +95,7 @@ class MachineFactory<M extends StateMachine<S>, S extends Object>
   S get state => resourceInstance.state;
 
   @override
-  M Function(MachineBus bus) get _factory => _machineFactory;
+  StateMachine<S> Function(MachineBus bus) get _factory => _machineFactory;
 
   @override
   bool get isLazy => autoStart;

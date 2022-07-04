@@ -14,7 +14,7 @@ class NotificationsListener<M extends StateMachine<Object>, N>
   }) : super(key: key);
 
   final Widget child;
-  final MachineFactory<M, Object> machineFactory;
+  final MachineFactory<Object> machineFactory;
   final void Function(BuildContext context, N notification) onNotification;
 
   @override
