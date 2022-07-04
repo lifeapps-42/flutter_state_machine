@@ -5,6 +5,7 @@ library state_machine;
 
 export 'src/state_machine_base.dart';
 export 'src/widgets/machine_builder.dart';
+export 'src/widgets/sub_machine_builder.dart';
 export 'src/constructable_resource.dart';
 
 
