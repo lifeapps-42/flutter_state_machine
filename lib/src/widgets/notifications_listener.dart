@@ -24,7 +24,7 @@ class NotificationsListener<M extends StateMachine<Object>, N>
 
 class _NotificationsListenerState<M extends StateMachine<Object>, N>
     extends State<NotificationsListener<M, N>> {
-  late final NotifierGear<N> _gear;
+  late final NotifierGear<Object, N> _gear;
   late final StreamSubscription _subscription;
 
   void _onNotification(N notification) {
@@ -34,7 +34,7 @@ class _NotificationsListenerState<M extends StateMachine<Object>, N>
   @override
   void initState() {
     assert(widget.machineFactory.resourceInstance is NotifierGear);
-    _gear = widget.machineFactory.resourceInstance as NotifierGear<N>;
+    _gear = widget.machineFactory.resourceInstance as NotifierGear<Object, N>;
     _subscription = _gear.stateStream.listen((_) {});
     _gear.startListener(_onNotification);
     super.initState();
