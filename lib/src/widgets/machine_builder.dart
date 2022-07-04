@@ -77,7 +77,7 @@ class MachineBuilder<S extends Object> extends StatefulWidget {
 
   final MachineFactory<S> machineFactory;
   final Widget Function(BuildContext context, S state, Widget child) builder;
-  final StateFilter stateFilter;
+  final StateFilter<S> stateFilter;
   final Widget child;
 
   @override
@@ -137,7 +137,7 @@ class MachineListener<S extends Object> extends StatefulWidget {
 
   final MachineFactory<S> machineFactory;
   final void Function(BuildContext context, S oldState, S newState) onChange;
-  final StateFilter stateFilter;
+  final StateFilter<S> stateFilter;
   final Widget child;
 
   @override
