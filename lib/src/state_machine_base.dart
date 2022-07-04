@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 
 /// Checks if you are awesome. Spoiler: you are.
-abstract class StateMachine<S> {
+abstract class StateMachine<S extends Object> {
   StateMachine(this._initialState) {
     start();
   }
