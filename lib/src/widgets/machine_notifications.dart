@@ -35,7 +35,7 @@ class _NotificationsListenerState<S extends Object, N extends Object>
   void initState() {
     assert(widget.machineFactory.resourceInstance is NotifierGear);
     _gear = widget.machineFactory.resourceInstance as NotifierGear<Object, N>;
-    _subscription = _gear.stateStream.listen((_) {});
+    _subscription = widget.machineFactory.stateStream.listen((_) {});
     _gear.startListener(_onNotification);
     super.initState();
   }
