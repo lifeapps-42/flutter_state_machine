@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:state_machine/src/gears/notifier_gear.dart';
 import 'package:state_machine/state_machine.dart';
 
-class MachineNotifications<M extends StateMachine<Object>, N>
+class MachineNotifications<S extends Object, N extends Object>
     extends StatefulWidget {
   const MachineNotifications({
     Key? key,
@@ -18,12 +18,12 @@ class MachineNotifications<M extends StateMachine<Object>, N>
   final void Function(BuildContext context, N notification) onNotification;
 
   @override
-  State<MachineNotifications<M, N>> createState() =>
-      _NotificationsListenerState<M, N>();
+  State<MachineNotifications<S, N>> createState() =>
+      _NotificationsListenerState<S, N>();
 }
 
-class _NotificationsListenerState<M extends StateMachine<Object>, N>
-    extends State<MachineNotifications<M, N>> {
+class _NotificationsListenerState<S extends Object, N extends Object>
+    extends State<MachineNotifications<S, N>> {
   late final NotifierGear<Object, N> _gear;
   late final StreamSubscription _subscription;
 
