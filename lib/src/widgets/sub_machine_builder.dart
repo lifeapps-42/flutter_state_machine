@@ -39,20 +39,11 @@ class _SubmachineBuilderState<S extends Object, T>
   }
 
   Widget _handleNewState(BuildContext context, S newState) {
-    if (_currentChild == null) {
-      final subState = widget.subStateFactory(newState);
-      final newChild = widget.builder(context, newState, subState);
-      _currentSubState = subState;
-      _currentChild = newChild;
-      return newChild;
-    }
     final subState = widget.subStateFactory(newState);
     if (_shouldIgnore(subState)) return _currentChild!;
     final newChild = widget.builder(context, newState, subState);
-    setState(() {
-      _currentSubState = subState;
-      _currentChild = newChild;
-    });
+    _currentSubState = subState;
+    _currentChild = newChild;
     return newChild;
   }
 
