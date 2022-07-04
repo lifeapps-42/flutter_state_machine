@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../state_machine.dart';
 
-class Target<S, T> {
+class Target<S extends Object, T extends Object> {
   final T? Function(S state) target;
 
   const Target(this.target);
