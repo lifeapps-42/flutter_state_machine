@@ -59,12 +59,10 @@ class ResourceFactory<T> extends ConstructableResource<T> {
   ResourceFactory(
     this._resourceFactory, {
     this.lazy = true,
-    this.autoDispose = false,
   });
 
   final T Function(MachineBus bus) _resourceFactory;
   final bool lazy;
-  final bool autoDispose;
 
   @override
   T Function(MachineBus bus) get _factory => _resourceFactory;
