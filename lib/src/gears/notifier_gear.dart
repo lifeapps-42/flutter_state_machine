@@ -1,6 +1,6 @@
 import '../../state_machine.dart';
 
-mixin NotifierGear<N> on StateMachine<Object> {
+mixin NotifierGear<N> on StateMachine {
   final _listeners = <void Function(N notification)>[];
 
   void notify(N notification, {bool onlyNewest = false}) {
