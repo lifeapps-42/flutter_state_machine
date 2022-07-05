@@ -56,7 +56,7 @@ mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
 
   @override
   void start() {
-    super.start();
     registerHandlers();
+    super.start();
   }
 }
