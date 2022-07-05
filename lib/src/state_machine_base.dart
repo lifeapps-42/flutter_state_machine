@@ -4,6 +4,9 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 
+part 'gears/shift_gear.dart';
+part 'gears/event_gear.dart';
+
 /// Checks if you are awesome. Spoiler: you are.
 abstract class StateMachine<S extends Object> {
   StateMachine(this._initialState) {
@@ -17,11 +20,11 @@ abstract class StateMachine<S extends Object> {
   late final StreamController<S> _stateStreamController;
 
   @nonVirtual
-  void shift(S newState) {
-    if (_state == newState) return;
-    onShift(_state, newState);
+  bool _shift(S newState) {
+    if (_state == newState) return false;
     _state = newState;
     _stateStreamController.add(newState);
+    return true;
   }
 
   // StateReference get reference => _reference;
@@ -40,10 +43,8 @@ abstract class StateMachine<S extends Object> {
   //     throw EventHandlerNotRegistered(event);
   //   }
   // }
-  void onShift(S oldState, S newState) {
-    print('$runtimeType($hashCode) shifted from $oldState to $newState');
-  }
 
+  @mustCallSuper
   void start() {
     _stateStreamController = StreamController<S>.broadcast();
     _state = _initialState;

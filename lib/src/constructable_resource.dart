@@ -90,6 +90,7 @@ class MachineFactory<S extends Object>
   late final StreamController<S> _factoryStateStreamController;
 
   StreamSubscription<S>? _machineStateStreamSubscription;
+  bool _softStopMode = false;
 
   Stream<S> get stateStream => _factoryStateStreamController.stream;
   S get state => resourceInstance.state;
@@ -107,13 +108,23 @@ class MachineFactory<S extends Object>
     print('${resourceInstance.stateStream} subscription started');
   }
 
-  void _onCancel() {
+  void _maybeStop(bool hard) {
     _machineStateStreamSubscription?.cancel();
     print('${resourceInstance.stateStream} subscription cancelled');
-    if (autoStop) {
+    if (hard || _softStopMode || autoStop) {
       resourceInstance.stop();
       _dispose();
     }
+  }
+
+  void hardStop() {
+    _maybeStop(true);
+  }
+
+  void softStop() {
+    _factoryStateStreamController.hasListener
+        ? _softStopMode = true
+        : hardStop();
   }
 
   @override
@@ -121,7 +132,7 @@ class MachineFactory<S extends Object>
     super._initFactory();
     _factoryStateStreamController = StreamController<S>.broadcast(
       onListen: _onListen,
-      onCancel: _onCancel,
+      onCancel: () => _maybeStop(false),
     );
   }
 }
