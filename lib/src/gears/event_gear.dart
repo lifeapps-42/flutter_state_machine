@@ -51,7 +51,12 @@ mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
       !_debugHandlersRegistered,
       'Handlers are to be registered only once with registerHandlers()',
     );
-    _handlerFunctions.add(HandlerFunction<EE, S>(function));
+    final toAdd = HandlerFunction<EE, S>(function);
+    assert(
+        !_handlerFunctions
+            .any((handler) => handler.eventType == toAdd.eventType),
+        'Handler for ${toAdd.eventType} is already registered');
+    _handlerFunctions.add(toAdd);
   }
 
   void registerHandlers();
