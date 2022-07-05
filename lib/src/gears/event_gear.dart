@@ -3,7 +3,10 @@ part of '../state_machine_base.dart';
 class HandlerFunction<E extends Object, S extends Object> {
   final FutureOr<void> Function(E event, Handler<S> handler) _function;
   const HandlerFunction(this._function);
+
   FutureOr<void> call(E event, Handler<S> handler) => _function(event, handler);
+
+  Type get eventType => E;
 }
 
 class Handler<S extends Object> {
@@ -39,7 +42,7 @@ mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
 
   void addEvent<EE extends E>(E event) async {
     final handlerFunction = _handlerFunctions.firstWhere(
-      (handler) => handler.runtimeType == HandlerFunction<EE, Handler<S>>,
+      (handler) => handler.eventType == EE,
       //TODO catch  error
     );
 
