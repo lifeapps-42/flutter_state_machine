@@ -30,7 +30,7 @@ mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
     _handlerFunctions.add(handler as EventHandlerFunction<E, S>);
   }
 
-  void _registerHandlers();
+  void registerHandlers();
 
   void addEvent<EE extends E>(E event) async {
     final handlerFunction = _handlerFunctions.firstWhere(
@@ -52,6 +52,6 @@ mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
   @override
   void start() {
     super.start();
-    _registerHandlers();
+    registerHandlers();
   }
 }
