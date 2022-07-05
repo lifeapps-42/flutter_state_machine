@@ -30,7 +30,7 @@ mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
   final _handlerFunctions = <HandlerFunction<E, S>>{};
 
   void handler<EE extends E>(
-    FutureOr<void> Function(E event, Handler<S> handler) function,
+    FutureOr<void> Function(EE event, Handler<S> handler) function,
   ) {
     _handlerFunctions.add(HandlerFunction<EE, S>(function));
   }
