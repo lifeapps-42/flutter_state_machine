@@ -81,9 +81,7 @@ class MachineFactory<M extends StateMachine<S>, S extends Object>
     this._machineFactory, {
     this.autoStart = true,
     this.autoStop = false,
-  }) {
-    _initFactory();
-  }
+  });
 
   final M Function(MachineBus bus) _machineFactory;
   final bool autoStart;
