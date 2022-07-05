@@ -40,9 +40,9 @@ mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
 
   void registerHandlers();
 
-  void addEvent<EE extends E>(E event) async {
+  void addEvent(E event) async {
     final handlerFunction = _handlerFunctions.firstWhere(
-      (handler) => handler.eventType == EE,
+      (handler) => handler.eventType == event.runtimeType,
       //TODO catch  error
     );
 
