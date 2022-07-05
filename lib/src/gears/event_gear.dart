@@ -18,8 +18,10 @@ class Handler<S extends Object> {
 
   void shift(S newState) {
     if (_isDone) return;
-    _machine._shift(newState);
-    (_machine as EventGear).onShift(_event, _machine.state, newState);
+    final oldState = _machine.state;
+    if (_machine._shift(newState)) {
+      (_machine as EventGear).onShift(_event, oldState, newState);
+    }
   }
 
   bool get isDone => _isDone;
