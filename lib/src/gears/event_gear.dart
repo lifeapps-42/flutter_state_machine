@@ -1,5 +1,13 @@
 part of '../state_machine_base.dart';
 
+class HandlerNotRegisteredError extends StateMachineError {
+  final Type eventType;
+
+  HandlerNotRegisteredError(this.eventType);
+  @override
+  String get message => 'No handler is registered for $eventType';
+}
+
 class HandlerFunction<E extends Object, S extends Object> {
   final FutureOr<void> Function(E event, Handler<S> handler) _function;
   const HandlerFunction(this._function);
@@ -34,24 +42,33 @@ class Handler<S extends Object> {
 mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
   final _handlerFunctions = <HandlerFunction<E, S>>{};
 
+  bool _debugHandlersRegistered = false;
+
   void handler<EE extends E>(
     FutureOr<void> Function(EE event, Handler<S> handler) function,
   ) {
+    assert(
+      !_debugHandlersRegistered,
+      'Handlers are to be registered only once with registerHandlers()',
+    );
     _handlerFunctions.add(HandlerFunction<EE, S>(function));
   }
 
   void registerHandlers();
 
   void addEvent(E event) async {
-    final handlerFunction = _handlerFunctions.firstWhere(
-      (handler) => handler.eventType == event.runtimeType,
-      //TODO catch  error
-    );
+    try {
+      final handlerFunction = _handlerFunctions.firstWhere(
+        (handler) => handler.eventType == event.runtimeType,
+      );
 
-    final handler = Handler<S>(event, this);
+      final handler = Handler<S>(event, this);
 
-    await handlerFunction(event, handler);
-    handler.close();
+      await handlerFunction(event, handler);
+      handler.close();
+    } on StateError {
+      throw HandlerNotRegisteredError(event.runtimeType);
+    }
   }
 
   @mustCallSuper
@@ -62,6 +79,7 @@ mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
   @override
   void start() {
     registerHandlers();
+    _debugHandlersRegistered = true;
     super.start();
   }
 }

@@ -4,6 +4,8 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 
+import 'exceptions/state_machine_exception.dart';
+
 part 'gears/shift_gear.dart';
 part 'gears/event_gear.dart';
 
