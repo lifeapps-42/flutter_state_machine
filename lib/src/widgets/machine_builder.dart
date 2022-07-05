@@ -72,7 +72,8 @@ class CustomStateFilter<S extends Object> extends StateFilter<S> {
   bool Function(S oldState, S newState) get shouldIgnore => ignoreWhen;
 }
 
-class MachineBuilder<S extends Object> extends StatefulWidget {
+class MachineBuilder<M extends StateMachine<S>, S extends Object>
+    extends StatefulWidget {
   const MachineBuilder({
     Key? key,
     required this.machineFactory,
@@ -81,17 +82,18 @@ class MachineBuilder<S extends Object> extends StatefulWidget {
     this.child = const SizedBox(),
   }) : super(key: key);
 
-  final MachineFactory<S> machineFactory;
+  final MachineFactory<M, S> machineFactory;
   final Widget Function(BuildContext context, S state, Widget child) builder;
   final StateFilter<S> stateFilter;
   final Widget child;
 
   @override
-  State<MachineBuilder<S>> createState() => _MachineBuilderState<S>();
+  State<MachineBuilder<M, S>> createState() => _MachineBuilderState<M, S>();
 }
 
-class _MachineBuilderState<S extends Object> extends State<MachineBuilder<S>> {
-  late final MachineFactory<S> _machineFactory;
+class _MachineBuilderState<M extends StateMachine<S>, S extends Object>
+    extends State<MachineBuilder<M, S>> {
+  late final MachineFactory<M, S> _machineFactory;
   late S _state;
   late final StreamSubscription<S> _stateSubscription;
 
@@ -132,7 +134,8 @@ class _MachineBuilderState<S extends Object> extends State<MachineBuilder<S>> {
   }
 }
 
-class MachineListener<S extends Object> extends StatefulWidget {
+class MachineListener<M extends StateMachine<S>, S extends Object>
+    extends StatefulWidget {
   const MachineListener({
     Key? key,
     required this.machineFactory,
@@ -141,18 +144,18 @@ class MachineListener<S extends Object> extends StatefulWidget {
     this.child = const SizedBox(),
   }) : super(key: key);
 
-  final MachineFactory<S> machineFactory;
+  final MachineFactory<M, S> machineFactory;
   final void Function(BuildContext context, S oldState, S newState) onChange;
   final StateFilter<S> stateFilter;
   final Widget child;
 
   @override
-  State<MachineListener<S>> createState() => _MachineListenerState<S>();
+  State<MachineListener<M, S>> createState() => _MachineListenerState<M, S>();
 }
 
-class _MachineListenerState<S extends Object>
-    extends State<MachineListener<S>> {
-  late final MachineFactory<S> _machineFactory;
+class _MachineListenerState<M extends StateMachine<S>, S extends Object>
+    extends State<MachineListener<M, S>> {
+  late final MachineFactory<M, S> _machineFactory;
   late S _state;
   late final StreamSubscription<S> _stateSubscription;
 
