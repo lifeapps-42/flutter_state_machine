@@ -1,7 +1,10 @@
 part of '../state_machine_base.dart';
 
-typedef EventHandlerFunction<E extends Object, S extends Object>
-    = FutureOr<void> Function(E event, Handler<S> handler);
+class HandlerFunction<E extends Object, S extends Object> {
+  final FutureOr<void> Function(E event, Handler<S> handler) _function;
+  const HandlerFunction(this._function);
+  FutureOr<void> call(E event, Handler<S> handler) => _function(event, handler);
+}
 
 class Handler<S extends Object> {
   final Object _event;
@@ -24,17 +27,19 @@ class Handler<S extends Object> {
 }
 
 mixin EventGear<S extends Object, E extends Object> on StateMachine<S> {
-  final _handlerFunctions = <EventHandlerFunction<E, S>>{};
+  final _handlerFunctions = <HandlerFunction<E, S>>{};
 
-  void handler<EE extends E>(EventHandlerFunction<EE, S> handler) {
-    _handlerFunctions.add(handler as EventHandlerFunction<E, S>);
+  void handler<EE extends E>(
+    FutureOr<void> Function(E event, Handler<S> handler) function,
+  ) {
+    _handlerFunctions.add(HandlerFunction<EE, S>(function));
   }
 
   void registerHandlers();
 
   void addEvent<EE extends E>(E event) async {
     final handlerFunction = _handlerFunctions.firstWhere(
-      (handler) => handler.runtimeType == EventHandlerFunction<EE, Handler<S>>,
+      (handler) => handler.runtimeType == HandlerFunction<EE, Handler<S>>,
       //TODO catch  error
     );
 
